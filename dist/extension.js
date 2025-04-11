@@ -34,25 +34,58 @@ __export(extension_exports, {
   deactivate: () => deactivate
 });
 module.exports = __toCommonJS(extension_exports);
-var vscode = __toESM(require("vscode"));
+var vscode2 = __toESM(require("vscode"));
 
 // src/provider/webviewViewProvider.ts
-var webviewViewProvider = class {
-  resolveWebviewView(webviewView, context, token) {
-    throw new Error("Method not implemented.");
+var vscode = __toESM(require("vscode"));
+var WebviewViewProvider = class {
+  constructor(context) {
+    this.context = context;
+  }
+  resolveWebviewView(webviewView, context, _token) {
+    webviewView.webview.options = {
+      enableScripts: true
+    };
+    webviewView.webview.html = this.getWebviewContent();
+    webviewView.webview.onDidReceiveMessage(async (message) => {
+      switch (message.command) {
+        case "showMessage":
+          vscode.window.showInformationMessage(message.text);
+          break;
+      }
+    });
+  }
+  getWebviewContent() {
+    return `
+                <!DOCTYPE html>
+                <html>
+                <body>
+                    <h1>Hello from Side Panel!</h1>
+                    <button onclick="sendMessage()">Send Message</button>
+                    <script>
+                        const vscode = acquireVsCodeApi();
+                        function sendMessage() {
+                            vscode.postMessage({
+                                command: 'showMessage',
+                                text: 'Hello from Webview!'
+                            });
+                        }
+                    </script>
+                </body>
+                </html>
+            `;
   }
 };
 
 // src/extension.ts
 function activate(context) {
-  vscode.window.showInformationMessage("Flowerplate correctly initialized");
-  const leftPanelWebViewProvider = new webviewViewProvider();
-  let view = vscode.window.registerWebviewViewProvider(
+  const leftPanelWebViewProvider = new WebviewViewProvider(context);
+  let view = vscode2.window.registerWebviewViewProvider(
     "test",
     leftPanelWebViewProvider
   );
-  const disposable = vscode.commands.registerCommand("flowerplate.helloWorld", () => {
-    vscode.window.showInformationMessage("Flowerplate initialized");
+  const disposable = vscode2.commands.registerCommand("flowerplate.helloWorld", () => {
+    vscode2.window.showInformationMessage("Flowerplate initialized");
   });
   context.subscriptions.push(disposable);
   context.subscriptions.push(view);
