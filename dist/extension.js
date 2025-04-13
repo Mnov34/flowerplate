@@ -81,14 +81,13 @@ var WebviewViewProvider = class {
 function activate(context) {
   const leftPanelWebViewProvider = new WebviewViewProvider(context);
   let view = vscode2.window.registerWebviewViewProvider(
-    "test",
+    "flowerplate",
     leftPanelWebViewProvider
   );
   const disposable = vscode2.commands.registerCommand("flowerplate.helloWorld", () => {
     vscode2.window.showInformationMessage("Flowerplate initialized");
   });
-  context.subscriptions.push(disposable);
-  context.subscriptions.push(view);
+  context.subscriptions.push(view, disposable);
 }
 function deactivate() {
 }
