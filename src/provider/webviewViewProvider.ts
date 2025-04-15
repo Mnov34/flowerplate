@@ -26,7 +26,8 @@ export class WebviewViewProvider implements vscode.WebviewViewProvider {
         return `
                 <!DOCTYPE html>
                 <html>
-                <body>
+                <body 
+                >
                     <h1>Hello from Side Panel!</h1>
                     <button onclick="sendMessage()">Send Message</button>
                     <script>

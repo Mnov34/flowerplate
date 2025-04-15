@@ -12,7 +12,8 @@
   ],
   "activationEvents": [
     "onView:flowerplate",
-    "onCommand:flowerplate.helloWorld"
+    "onCommand:flowerplate.helloWorld",
+    "onCommand:ShowTemplate"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -37,6 +38,10 @@
       {
         "command": "flowerplate.helloWorld",
         "title": "Hello World"
+      },
+      {
+        "command": "ShowTemplate",
+        "title": "Show Template"
       }
     ]
   },

@@ -1,15 +1,27 @@
 import * as vscode from 'vscode';
-import { WebviewViewProvider } from './provider/webviewViewProvider';
+import { WebviewFlowerPlate } from './html/webview';
 
 export function activate(context: vscode.ExtensionContext) {
-    const leftPanelWebViewProvider = new WebviewViewProvider(context);
-    let view = vscode.window.registerWebviewViewProvider(
-        "flowerplate",
-        leftPanelWebViewProvider
+    context.subscriptions.push( //TODO: refactor this shit in another func mb register directory 
+        vscode.commands.registerCommand('ShowTemplate', () => {
+            // creation webview panel
+            const panel = vscode.window.createWebviewPanel(
+                'floweplate',
+                "FlowerPlate",
+                vscode.ViewColumn.One,
+                {
+                    enableScripts: true,
+                    localResourceRoots: [vscode.Uri.joinPath(context.extensionUri, 'src')]
+                }
+            );
+
+            // add html to panel.webview
+            panel.webview.html = WebviewFlowerPlate.buildHtmlExample(
+                panel.webview,
+                context.extensionUri
+            );
+        })
     );
-    const disposable = vscode.commands.registerCommand('flowerplate.helloWorld', () => {
-        vscode.window.showInformationMessage('Flowerplate initialized');
-    }); 
-    context.subscriptions.push(view,disposable);
 }
+
 export function deactivate() {}

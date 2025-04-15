@@ -36,58 +36,48 @@ __export(extension_exports, {
 module.exports = __toCommonJS(extension_exports);
 var vscode2 = __toESM(require("vscode"));
 
-// src/provider/webviewViewProvider.ts
+// src/html/webview.ts
 var vscode = __toESM(require("vscode"));
-var WebviewViewProvider = class {
-  constructor(context) {
-    this.context = context;
-  }
-  resolveWebviewView(webviewView, context, _token) {
-    webviewView.webview.options = {
-      enableScripts: true
-    };
-    webviewView.webview.html = this.getWebviewContent();
-    webviewView.webview.onDidReceiveMessage(async (message) => {
-      switch (message.command) {
-        case "showMessage":
-          vscode.window.showInformationMessage(message.text);
-          break;
-      }
-    });
-  }
-  getWebviewContent() {
-    return `
-                <!DOCTYPE html>
-                <html>
-                <body>
-                    <h1>Hello from Side Panel!</h1>
-                    <button onclick="sendMessage()">Send Message</button>
-                    <script>
-                        const vscode = acquireVsCodeApi();
-                        function sendMessage() {
-                            vscode.postMessage({
-                                command: 'showMessage',
-                                text: 'Hello from Webview!'
-                            });
-                        }
-                    </script>
-                </body>
-                </html>
-            `;
+var path = __toESM(require("path"));
+var fs = __toESM(require("fs"));
+var WebviewFlowerPlate = class {
+  //function to relete all css with html tempalte 
+  static buildHtmlExample(webview, extensionUri) {
+    const htmlPath = path.join(extensionUri.fsPath, "src", "html", "html-view", "def-view.html");
+    let html = fs.readFileSync(htmlPath, "utf8");
+    const cssFiles = [
+      "default-def-syntax-style.css",
+      "default-syntax-style.css",
+      "template-background.css"
+    ];
+    let styleLinks = cssFiles.map((fileName) => {
+      const cssUri = webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, "src", "html", "css-view", fileName));
+      return `<link rel="stylesheet" href="${cssUri}">`;
+    }).join("\n");
+    html = html.replace("{{styleLinks}}", styleLinks);
+    return html;
   }
 };
 
 // src/extension.ts
 function activate(context) {
-  const leftPanelWebViewProvider = new WebviewViewProvider(context);
-  let view = vscode2.window.registerWebviewViewProvider(
-    "flowerplate",
-    leftPanelWebViewProvider
+  context.subscriptions.push(
+    vscode2.commands.registerCommand("ShowTemplate", () => {
+      const panel = vscode2.window.createWebviewPanel(
+        "floweplate",
+        "FlowerPlate",
+        vscode2.ViewColumn.One,
+        {
+          enableScripts: true,
+          localResourceRoots: [vscode2.Uri.joinPath(context.extensionUri, "src")]
+        }
+      );
+      panel.webview.html = WebviewFlowerPlate.buildHtmlExample(
+        panel.webview,
+        context.extensionUri
+      );
+    })
   );
-  const disposable = vscode2.commands.registerCommand("flowerplate.helloWorld", () => {
-    vscode2.window.showInformationMessage("Flowerplate initialized");
-  });
-  context.subscriptions.push(view, disposable);
 }
 function deactivate() {
 }

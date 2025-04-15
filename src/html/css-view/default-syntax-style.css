@@ -1,0 +1,19 @@
+.keyword {
+    color: #569cd6;
+}
+
+.function {
+    color: #dcdcaa;
+}
+
+.arg {
+    color: #9cdcfe;
+}
+
+.arrow {
+    color: #c586c0;
+}
+
+.none {
+    color: #ce9178;
+}
