@@ -1,12 +1,27 @@
-import { ExtensionContext, window } from "vscode";
+import { commands, ExtensionContext, window } from "vscode";
 import { FlowerPlateProvider } from "./provider/FlowerPlateProvider";
+import { Template } from "./util/types";
 
 export function activate(context: ExtensionContext) {
-    const provider = new FlowerPlateProvider();
+    const provider = new FlowerPlateProvider(context);
 
-    window.registerTreeDataProvider('flowerplate.templates', provider);
-
-    window.onDidChangeActiveTextEditor(() => provider.refresh());
+    context.subscriptions.push(
+        window.registerTreeDataProvider('flowerplate.templates', provider),
+        commands.registerCommand('flowerplate.insertTemplate', insertTemplate),
+        window.onDidChangeActiveTextEditor(() => provider.refresh())
+    );
 }
 
-export function deactivate() {}
+async function insertTemplate(template: Template) {
+    const editor = window.activeTextEditor;
+
+    if (!editor) return;
+
+    const code = template.code.join("\n");
+    await editor.edit(editBuilder => {
+        editBuilder.insert(editor.selection.active, code);
+    });
+
+}
+
+export function deactivate() { }
