@@ -10,18 +10,14 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-    "onView:flowerplate",
-    "onCommand:flowerplate.helloWorld",
-    "onCommand:ShowTemplate"
-  ],
-  "main": "./dist/extension.js",
+  "activationEvents": [],
+  "main": "./dist/extension.js",  
   "contributes": {
     "viewsContainers": {
       "activitybar": [
         {
           "id": "flowerplateContainer",
-          "title": "FlowerPlate",
+          "title": "Flowerplate",
           "icon": "./assets/images/flowerplate.png"
         }
       ]
@@ -29,21 +25,12 @@
     "views": {
       "flowerplateContainer": [
         {
-          "id": "flowerplate",
-          "name": "Webview"
+          "id": "flowerplate.templates",
+          "name": "Template",
+          "icon": "./assets/images/flowerplate.png"
         }
       ]
-    },
-    "commands": [
-      {
-        "command": "flowerplate.helloWorld",
-        "title": "Hello World"
-      },
-      {
-        "command": "ShowTemplate",
-        "title": "Show Template"
-      }
-    ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",

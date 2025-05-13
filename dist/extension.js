@@ -1,9 +1,7 @@
 "use strict";
-var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __export = (target, all) => {
   for (var name in all)
@@ -17,14 +15,6 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // src/extension.ts
@@ -34,50 +24,52 @@ __export(extension_exports, {
   deactivate: () => deactivate
 });
 module.exports = __toCommonJS(extension_exports);
-var vscode2 = __toESM(require("vscode"));
+var import_vscode2 = require("vscode");
 
-// src/html/webview.ts
-var vscode = __toESM(require("vscode"));
-var path = __toESM(require("path"));
-var fs = __toESM(require("fs"));
-var WebviewFlowerPlate = class {
-  //function to relete all css with html tempalte 
-  static buildHtmlExample(webview, extensionUri) {
-    const htmlPath = path.join(extensionUri.fsPath, "src", "html", "html-view", "def-view.html");
-    let html = fs.readFileSync(htmlPath, "utf8");
-    const cssFiles = [
-      "default-def-syntax-style.css",
-      "default-syntax-style.css",
-      "template-background.css"
-    ];
-    let styleLinks = cssFiles.map((fileName) => {
-      const cssUri = webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, "src", "html", "css-view", fileName));
-      return `<link rel="stylesheet" href="${cssUri}">`;
-    }).join("\n");
-    html = html.replace("{{styleLinks}}", styleLinks);
-    return html;
+// src/provider/FlowerPlateProvider.ts
+var import_vscode = require("vscode");
+var FlowerPlateProvider = class {
+  _onDidChangeTreeData = new import_vscode.EventEmitter();
+  onDidChangeTreeData = this._onDidChangeTreeData.event;
+  constructor() {
+  }
+  refresh() {
+    this._onDidChangeTreeData.fire(void 0);
+  }
+  getTreeItem(element) {
+    return element;
+  }
+  async getChildren(element) {
+    const editor = import_vscode.window.activeTextEditor;
+    if (!editor) {
+      return [new import_vscode.TreeItem("No file opened")];
+    }
+    ;
+    if (editor.document.languageId !== "python") {
+      return [new import_vscode.TreeItem("Flowerplate only supports python for now.")];
+    }
+    ;
+    return this.getTemplateItems();
+  }
+  async getTemplateItems() {
+    try {
+      const items = [];
+      if (items.length === 0) {
+        return [new import_vscode.TreeItem("No template available")];
+      }
+      ;
+      return items;
+    } catch (error) {
+      return [new import_vscode.TreeItem("Templates failed to load")];
+    }
   }
 };
 
 // src/extension.ts
 function activate(context) {
-  context.subscriptions.push(
-    vscode2.commands.registerCommand("ShowTemplate", () => {
-      const panel = vscode2.window.createWebviewPanel(
-        "floweplate",
-        "FlowerPlate",
-        vscode2.ViewColumn.One,
-        {
-          enableScripts: true,
-          localResourceRoots: [vscode2.Uri.joinPath(context.extensionUri, "src")]
-        }
-      );
-      panel.webview.html = WebviewFlowerPlate.buildHtmlExample(
-        panel.webview,
-        context.extensionUri
-      );
-    })
-  );
+  const provider = new FlowerPlateProvider();
+  import_vscode2.window.registerTreeDataProvider("flowerplate.templates", provider);
+  import_vscode2.window.onDidChangeActiveTextEditor(() => provider.refresh());
 }
 function deactivate() {
 }
