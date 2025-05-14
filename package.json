@@ -4,6 +4,7 @@
   "description": "Generate boilerplate code from visual boxes",
   "version": "0.1.1",
   "icon": "./assets/images/flowerplate.png",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.99.0"
   },
