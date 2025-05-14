@@ -15,6 +15,7 @@ export function activate(context: ExtensionContext) {
 async function insertTemplate(template: Template) {
     const editor = window.activeTextEditor;
 
+    // eslint-disable-next-line curly
     if (!editor) return;
 
     const code = template.code.join("\n");
