@@ -1,0 +1,25 @@
+{
+    "name": "",
+    "code": [
+        "",
+        "import random",
+        "",
+        "# Original list",
+        "my_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]",
+        "",
+        "# Shuffling the list using random.shuffle",
+        "random.shuffle(my_list)",
+        "",
+        "# Displaying the result",
+        "print(\"Original List:\", my_list)",
+        "",
+        "# Output: Original List: [3, 8, 7, 1, 9, 6, 5, 4, 2]",
+        ""
+    ],
+    "language": "python",
+    "tags": [
+        "list",
+        "shuffle"
+    ],
+    "variables": {}
+}
