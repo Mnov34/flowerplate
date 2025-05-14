@@ -140,7 +140,7 @@ var FlowerPlateProvider = class {
     item.description = template.tags?.join(", ");
     item.tooltip = this.createTooltip(template);
     item.command = {
-      command: "flowerplate.insertTemplate",
+      command: "flowerplate.templates.insert",
       title: "Insert template",
       arguments: [template]
     };
@@ -159,8 +159,8 @@ var FlowerPlateProvider = class {
 function activate(context) {
   const provider = new FlowerPlateProvider(context);
   context.subscriptions.push(
-    import_vscode3.window.registerTreeDataProvider("flowerplate.templates", provider),
-    import_vscode3.commands.registerCommand("flowerplate.insertTemplate", insertTemplate),
+    import_vscode3.window.registerTreeDataProvider("flowerplate.templates.provider", provider),
+    import_vscode3.commands.registerCommand("flowerplate.templates.insert", insertTemplate),
     import_vscode3.window.onDidChangeActiveTextEditor(() => provider.refresh())
   );
 }

@@ -62,7 +62,7 @@ export class FlowerPlateProvider implements TreeDataProvider<TreeItem> {
         item.description = template.tags?.join(', ');
         item.tooltip = this.createTooltip(template);
         item.command = {
-            command: 'flowerplate.insertTemplate',
+            command: 'flowerplate.templates.insert',
             title: 'Insert template',
             arguments: [template]
         };

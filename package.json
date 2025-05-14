@@ -25,7 +25,7 @@
     "views": {
       "flowerplateContainer": [
         {
-          "id": "flowerplate.templates",
+          "id": "flowerplate.templates.provider",
           "name": "Template",
           "icon": "./assets/images/flowerplate.png"
         }

@@ -6,8 +6,8 @@ export function activate(context: ExtensionContext) {
     const provider = new FlowerPlateProvider(context);
 
     context.subscriptions.push(
-        window.registerTreeDataProvider('flowerplate.templates', provider),
-        commands.registerCommand('flowerplate.insertTemplate', insertTemplate),
+        window.registerTreeDataProvider('flowerplate.templates.provider', provider),
+        commands.registerCommand('flowerplate.templates.insert', insertTemplate),
         window.onDidChangeActiveTextEditor(() => provider.refresh())
     );
 }
