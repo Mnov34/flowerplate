@@ -1,0 +1,30 @@
+{
+    "name": "String slicing",
+    "code": [
+        "",
+        "my_string = \"Hello, World!\"",
+        "",
+        "# Get characters from index 7 to 12 (exclusive)",
+        "substring = my_string[7:12]",
+        "print(substring)",
+        "# Output: World",
+        "",
+        "# Get every second character from index 0 to 10 (exclusive)",
+        "substring = my_string[0:10:2]",
+        "print(substring)",
+        "# Output: Hlo o",
+        "",
+        "# Slice from the beginning up to index 5 (exclusive)",
+        "substring = my_string[:5]",
+        "print(substring)",
+        "# Output: Hello",
+        ""
+    ],
+    "language": "python",
+    "tags": [
+        "slice",
+        "string",
+        "words"
+    ],
+    "variables": {}
+}

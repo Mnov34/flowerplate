@@ -1,0 +1,17 @@
+{
+    "name": "Capitalize string",
+    "code": [
+        "",
+        "input_string = \"hello world\"",
+        "capitalized_string = input_string.title()",
+        "print(capitalized_string)",
+        "#Output: Hello World",
+        ""
+    ],
+    "language": "python",
+    "tags": [
+        "string",
+        "words"
+    ],
+    "variables": {}
+}

@@ -1,0 +1,25 @@
+{
+    "name": "Find most frequent element in list",
+    "code": [
+        "",
+        "# Original list",
+        "my_list = [1, 2, 3, 2, 4, 2, 5, 6, 2, 7, 8, 2, 9]",
+        "",
+        "# Find the most frequent element using max(set())",
+        "most_frequent_element = max(set(my_list), key=my_list.count)",
+        "",
+        "# Display the result",
+        "print(\"Original List:\", my_list)",
+        "#Output: Original List: [1, 2, 3, 2, 4, 2, 5, 6, 2, 7, 8, 2, 9]",
+        "",
+        "print(\"Most Frequent Element:\", most_frequent_element)",
+        "#Output: Most Frequent Element: 2",
+        ""
+    ],
+    "language": "python",
+    "tags": [
+        "list",
+        "statistics"
+    ],
+    "variables": {}
+}
