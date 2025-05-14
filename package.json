@@ -2,7 +2,7 @@
   "name": "flowerplate",
   "displayName": "Flowerplate",
   "description": "Generate boilerplate code from visual boxes",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "icon": "./assets/images/flowerplate.png",
   "engines": {
     "vscode": "^1.99.0"
