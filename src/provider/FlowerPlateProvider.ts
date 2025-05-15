@@ -1,14 +1,17 @@
-import { EventEmitter, ExtensionContext, ThemeIcon, TreeDataProvider, TreeItem, window } from "vscode";
+import { EventEmitter, ExtensionContext, MarkdownString, ThemeIcon, TreeDataProvider, TreeItem, window } from "vscode";
 import { TemplateManager } from "../util/TemplateManager";
 import { Template } from '../util/types';
+import { UserConfiguration } from '../util/UserConfiguration';
 
 export class FlowerPlateProvider implements TreeDataProvider<TreeItem> {
+    private config = UserConfiguration.getInstance();
     private templateManager: TemplateManager;
     private _onDidChangeTreeData = new EventEmitter<TreeItem | undefined>();
     readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
 
     constructor(context: ExtensionContext) {
         this.templateManager = new TemplateManager(context);
+        this.config.onDidChange(() => this.refresh());
     }
 
     refresh(): void {
@@ -38,18 +41,6 @@ export class FlowerPlateProvider implements TreeDataProvider<TreeItem> {
         }
     }
 
-    private async getTemplateItems(): Promise<TreeItem[]> {
-        try {
-            const items: TreeItem[] = [];
-
-            if (items.length === 0) { return [new TreeItem('No template available')]; };
-
-            return items;
-        } catch (error) {
-            return [new TreeItem('Templates failed to load')];
-        }
-    }
-
     private createStatusItem(message: string): TreeItem {
         const item = new TreeItem(message);
         item.iconPath = new ThemeIcon('warning');
@@ -70,11 +61,38 @@ export class FlowerPlateProvider implements TreeDataProvider<TreeItem> {
         return item;
     }
 
-    private createTooltip(template: Template): string {
-        return [
-            `**${template.name}**`,
-            ...template.code.slice(0, 5),
-            template.code.length > 5 ? `...(+${template.code.length - 5} lines)` : ''
-        ].join('\n');
+    private createTooltip(template: Template): MarkdownString {
+        const previewLines = this.config.previewLines;
+        const importsEnabled = this.config.shouldInsertImports;
+        const mdString = new MarkdownString(undefined, true);
+        const codePreview = template.code.slice(0, previewLines).join('\n');
+        const codeImports = template.imports.join('\n');
+
+        mdString.appendMarkdown(`**${template.name}**`);
+        mdString.appendMarkdown('\n\n---\n\n');
+
+        if (importsEnabled && template.imports.length >= 1) {
+            mdString.appendCodeblock(codeImports, template.language);
+        }
+
+        mdString.appendMarkdown('\n');
+        mdString.appendCodeblock(codePreview, template.language);
+
+        if (template.code.length > previewLines) {
+            const remaining = template.code.length - previewLines;
+            mdString.appendMarkdown(`\n*...(+${remaining} ${remaining === 1 ? 'line' : 'lines'})*`);
+        }
+
+        mdString.appendMarkdown('\n\n---\n');
+        mdString.appendMarkdown(`**Language**: ${template.language}  \n`);
+
+        if (template.tags?.length) {
+            mdString.appendMarkdown(`**Tags**: ${template.tags.join(', ')}  \n`);
+        }
+        if (template.variables) {
+            mdString.appendMarkdown(`**Variables**: ${Object.keys(template.variables).join(', ')}`);
+        }
+
+        return mdString;
     }
 }

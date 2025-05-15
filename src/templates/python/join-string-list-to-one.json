@@ -1,7 +1,9 @@
 {
     "name": "Join multiple strings to a single one",
+    "imports": [
+        ""
+    ],
     "code": [
-        "",
         "# Original list of strings",
         "string_list = ['Hello', 'World', 'in', 'Python']",
         "",
@@ -14,13 +16,13 @@
         "#Output: Original List of Strings: ['Hello', 'World', 'in', 'Python']",
         "",
         "print(\"Squashed String:\", result_string)",
-        "#Output: Squashed String: Hello World in Python",
-        ""
+        "#Output: Squashed String: Hello World in Python"
     ],
     "language": "python",
     "tags": [
         "strings",
-        "join"
+        "join",
+        "tutorial"
     ],
     "variables": {}
 }

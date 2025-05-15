@@ -53,6 +53,7 @@ export class TemplateManager {
 
         return {
             ...template,
+            imports: this.normalizeCode(template.imports || []),
             code: this.normalizeCode(template.code)
         };
     }

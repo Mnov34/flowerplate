@@ -1,7 +1,9 @@
 {
     "name": "Strip",
+    "imports": [
+        ""
+    ],
     "code": [
-        "",
         "# Original string with leading and trailing spaces",
         "original_string = \"   Hello, World!   \"",
         "",
@@ -13,12 +15,12 @@
         "# Output: Original String: '   Hello, World!   '",
         "",
         "print(\"Stripped String:\", repr(stripped_string))",
-        "# Output: Stripped String: 'Hello, World!'",
-        ""
+        "# Output: Stripped String: 'Hello, World!'"
     ],
     "language": "python",
     "tags": [
-        "string"
+        "string",
+        "tutorial"
     ],
     "variables": {}
 }

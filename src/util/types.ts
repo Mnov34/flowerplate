@@ -1,5 +1,6 @@
 export interface Template {
     name: string;
+    imports: string[];
     code: string[];
     language: string;
     tags?: string[];

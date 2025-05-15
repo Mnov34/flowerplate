@@ -1,4 +1,5 @@
 node_modules
 .vscode
-dist
+dist/**
 src/templates/python/base.json
+patch.txt
