@@ -1,7 +1,10 @@
-import { EventEmitter, ExtensionContext, ThemeIcon, TreeDataProvider, TreeItem, window } from "vscode";
+import { Command, EventEmitter, ExtensionContext, ThemeIcon, TreeDataProvider, TreeItem, TreeItemCollapsibleState, window } from "vscode";
 import { TemplateManager } from "../util/TemplateManager";
 import { Template } from '../util/types';
 
+/*
+ *  
+ */
 export class FlowerPlateProvider implements TreeDataProvider<TreeItem> {
     private templateManager: TemplateManager;
     private _onDidChangeTreeData = new EventEmitter<TreeItem | undefined>();
@@ -66,6 +69,10 @@ export class FlowerPlateProvider implements TreeDataProvider<TreeItem> {
             title: 'Insert template',
             arguments: [template]
         };
+
+        item.contextValue = 'flowerplateTemplate';
+        // Add template in TreeItem
+        (item as any).template = template;
 
         return item;
     }

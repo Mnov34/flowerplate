@@ -1,0 +1,19 @@
+{
+  "name": "Flask Server",
+  "filename": "httpd-web.json",
+  "code": [
+    "import Flask \r",
+    "sdfsdfdsfimport Flaimport Flaimport Flaimport Flaimport Flaimport Flaimport Flaimport Fla"
+  ],
+  "language": "python",
+  "tags": [
+    "web",
+    "server"
+  ],
+  "variables": {
+    "port": {
+      "default": 8000,
+      "type": "number"
+    }
+  }
+}

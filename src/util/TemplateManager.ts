@@ -7,7 +7,7 @@ export class TemplateManager {
     private templateRoot: string;
 
     constructor(context: ExtensionContext) {
-        this.templateRoot = path.join(context.extensionPath, 'src', 'templates');
+        this.templateRoot = path.join(__dirname, '..', 'resources', 'templates');
     }
 
     async getTemplates(language: string) {
@@ -34,7 +34,10 @@ export class TemplateManager {
         for (const [file] of templateFiles.filter(f => f[0].endsWith('.json'))) {
             try {
                 const template = await this.loadTemplateFile(path.join(templateDir, file));
-                templates.push(template);
+                templates.push({
+                    ...template,
+                    filename: file    
+                });
             } catch (error) {
                 console.error(`Error loading ${file}:`, error);
             }
@@ -57,7 +60,34 @@ export class TemplateManager {
         };
     }
 
+
+    async updateTemplate(language: string, filename: string, newCode: string[]): Promise<void> {
+        const filePath = path.join(this.templateRoot, language, filename);
+        const fileUri = Uri.file(filePath);
+
+        try {
+            const data = await workspace.fs.readFile(fileUri);
+            const parsed = JSON.parse(Buffer.from(data).toString()) as Template;
+            const updated: Template = {
+                ...parsed,
+                code: newCode
+            };
+            const json = JSON.stringify(updated, null, 2);
+            await workspace.fs.writeFile(fileUri, Buffer.from(json, 'utf8'));
+            window.showInformationMessage(`Template "${updated.name}" saved to ${filename}.`);
+            this.clearCache(language);
+        } catch (err) {
+            window.showErrorMessage(`Failed to save template: ${err}`);
+            throw err;
+        }
+    }
+
+
     private normalizeCode(code: string | string[]): string[] {
         return Array.isArray(code) ? code : code.split('\n');
+    }
+
+    clearCache(language: string) {
+        this.cache.delete(language);
     }
 }

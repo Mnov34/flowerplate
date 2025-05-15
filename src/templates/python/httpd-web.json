@@ -1,11 +1,7 @@
 {
   "name": "HTTP Server",
   "code": [
-    "import http.server",
-    "handler = http.server.SimpleHTTPRequestHandler",
-    "httpd = http.server.HTTPServer((\"\", 8000), handler)",
-    "print(\"Server started at port 8000\")",
-    "httpd.serve_forever()"
+    "import os"
   ],
   "language": "python",
   "tags": ["web", "server"],

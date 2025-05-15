@@ -5,6 +5,7 @@ const watch = process.argv.includes('--watch');
 
 /**
  * @type {import('esbuild').Plugin}
+ * 
  */
 const esbuildProblemMatcherPlugin = {
 	name: 'esbuild-problem-matcher',

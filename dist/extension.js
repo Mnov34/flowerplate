@@ -24,7 +24,7 @@ __export(extension_exports, {
   deactivate: () => deactivate
 });
 module.exports = __toCommonJS(extension_exports);
-var import_vscode3 = require("vscode");
+var import_vscode4 = require("vscode");
 
 // src/provider/FlowerPlateProvider.ts
 var import_vscode2 = require("vscode");
@@ -36,7 +36,7 @@ var TemplateManager = class {
   cache = /* @__PURE__ */ new Map();
   templateRoot;
   constructor(context) {
-    this.templateRoot = path.join(context.extensionPath, "src", "templates");
+    this.templateRoot = path.join(__dirname, "..", "resources", "templates");
   }
   async getTemplates(language) {
     if (this.cache.has(language)) {
@@ -58,7 +58,10 @@ var TemplateManager = class {
     for (const [file] of templateFiles.filter((f) => f[0].endsWith(".json"))) {
       try {
         const template = await this.loadTemplateFile(path.join(templateDir, file));
-        templates.push(template);
+        templates.push({
+          ...template,
+          filename: file
+        });
       } catch (error) {
         console.error(`Error loading ${file}:`, error);
       }
@@ -76,8 +79,30 @@ var TemplateManager = class {
       code: this.normalizeCode(template.code)
     };
   }
+  async updateTemplate(language, filename, newCode) {
+    const filePath = path.join(this.templateRoot, language, filename);
+    const fileUri = import_vscode.Uri.file(filePath);
+    try {
+      const data = await import_vscode.workspace.fs.readFile(fileUri);
+      const parsed = JSON.parse(Buffer.from(data).toString());
+      const updated = {
+        ...parsed,
+        code: newCode
+      };
+      const json = JSON.stringify(updated, null, 2);
+      await import_vscode.workspace.fs.writeFile(fileUri, Buffer.from(json, "utf8"));
+      import_vscode.window.showInformationMessage(`Template "${updated.name}" saved to ${filename}.`);
+      this.clearCache(language);
+    } catch (err) {
+      import_vscode.window.showErrorMessage(`Failed to save template: ${err}`);
+      throw err;
+    }
+  }
   normalizeCode(code) {
     return Array.isArray(code) ? code : code.split("\n");
+  }
+  clearCache(language) {
+    this.cache.delete(language);
   }
 };
 
@@ -144,6 +169,8 @@ var FlowerPlateProvider = class {
       title: "Insert template",
       arguments: [template]
     };
+    item.contextValue = "flowerplateTemplate";
+    item.template = template;
     return item;
   }
   createTooltip(template) {
@@ -155,19 +182,58 @@ var FlowerPlateProvider = class {
   }
 };
 
+// src/provider/EditorScraper.ts
+var import_vscode3 = require("vscode");
+var EditorScraper = class {
+  static context;
+  constructor() {
+  }
+  static ScrapOnView(document) {
+    if (!document) {
+      import_vscode3.window.showErrorMessage("No document provided");
+      return [];
+    }
+    const lines = document.getText().split("\n");
+    return lines;
+  }
+};
+
 // src/extension.ts
 function activate(context) {
+  import_vscode4.window.showInformationMessage("activeted");
   const provider = new FlowerPlateProvider(context);
+  const manager = new TemplateManager(context);
+  const disable = import_vscode4.commands.registerCommand("flowerplate.template.update", (treeItem) => {
+    const template = treeItem.template;
+    const editor = import_vscode4.window.activeTextEditor;
+    const code = EditorScraper.ScrapOnView(editor?.document);
+    manager.updateTemplate(template.language, template.filename, code);
+    provider.refresh();
+    import_vscode4.window.showInformationMessage("Template updated!");
+  });
   context.subscriptions.push(
-    import_vscode3.window.registerTreeDataProvider("flowerplate.templates", provider),
-    import_vscode3.commands.registerCommand("flowerplate.insertTemplate", insertTemplate),
-    import_vscode3.window.onDidChangeActiveTextEditor(() => provider.refresh())
+    import_vscode4.window.registerTreeDataProvider("flowerplate.templates", provider),
+    import_vscode4.commands.registerCommand("flowerplate.insertTemplate", insertTemplate),
+    import_vscode4.window.onDidChangeActiveTextEditor(() => provider.refresh()),
+    //refresh provider on changes in active text editor
+    import_vscode4.workspace.onDidChangeTextDocument((editor) => {
+      EditorScraper.ScrapOnView(editor.document);
+      import_vscode4.window.showInformationMessage("Save changes?");
+    }),
+    disable
   );
 }
 async function insertTemplate(template) {
-  const editor = import_vscode3.window.activeTextEditor;
+  const editor = import_vscode4.window.activeTextEditor;
   if (!editor) return;
-  const code = template.code.join("\n");
+  const manager = new TemplateManager({ extensionPath: __dirname });
+  const templates = await manager.getTemplates(template.language);
+  const matchingTemplate = templates?.find((t) => t.name === template.name);
+  if (!matchingTemplate) {
+    import_vscode4.window.showErrorMessage("Template not found after update.");
+    return;
+  }
+  const code = matchingTemplate.code.join("\n");
   await editor.edit((editBuilder) => {
     editBuilder.insert(editor.selection.active, code);
   });

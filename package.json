@@ -10,9 +10,21 @@
   "categories": [
     "Other"
   ],
+  "files": [
+    "dist",
+    "resources"
+  ],
   "activationEvents": [],
-  "main": "./dist/extension.js",  
+  "main": "./dist/extension.js",
   "contributes": {
+    "commands": [
+      {
+        "command": "flowerplate.template.update",
+        "title": "Update Template",
+        "shortTitle": "update this template by ",
+        "category": "Flowerplate"
+      }
+    ],
     "viewsContainers": {
       "activitybar": [
         {
@@ -30,7 +42,25 @@
           "icon": "./assets/images/flowerplate.png"
         }
       ]
-    }
+    },
+    "menus": {
+      "view/item/context": [
+        {
+          "when": "view == flowerplate.templates && viewItem == flowerplateTemplate",
+          "command": "flowerplate.template.update",
+          "group": "inline"
+        }
+      ]
+    },
+        "view/title": [
+      {
+        "when": "view == flowerplate.templates",
+        "command": "flowerplate.template.update",
+        "group": "navigation",
+        "alt": "flowerplate.template.refresh",
+        "icon": "$(refresh)"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
