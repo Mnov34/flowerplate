@@ -1,0 +1,29 @@
+{
+    "name": "Email validation ReGeX",
+    "code": [
+        "",
+        "import re",
+        "",
+        "def validate_email(email):",
+        "    email_pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')",
+        "    return bool(email_pattern.match(email))",
+        "",
+        "# Example usage:",
+        "email_to_validate = \"user@example.com\"",
+        "",
+        "if validate_email(email_to_validate):",
+        "    print(f\"{email_to_validate} is a valid email address.\")",
+        "else:",
+        "    print(f\"{email_to_validate} is not a valid email address.\")",
+        "",
+        "# Output: user@example.com is a valid email address.",
+        ""
+    ],
+    "language": "python",
+    "tags": [
+        "regex",
+        "email",
+        "validation"
+    ],
+    "variables": {}
+}

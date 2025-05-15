@@ -1,25 +1,28 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
-import { WebviewViewProvider } from './provider/webviewViewProvider';
+import { commands, ExtensionContext, window } from "vscode";
+import { FlowerPlateProvider } from "./provider/FlowerPlateProvider";
+import { Template } from "./util/types";
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
-	const leftPanelWebViewProvider = new WebviewViewProvider(context);
+export function activate(context: ExtensionContext) {
+    const provider = new FlowerPlateProvider(context);
 
-	let view = vscode.window.registerWebviewViewProvider(
-		"test",
-		leftPanelWebViewProvider
-	);
-	
-	const disposable = vscode.commands.registerCommand('flowerplate.helloWorld', () => {
-		vscode.window.showInformationMessage('Flowerplate initialized');
-	}); 
-
-	context.subscriptions.push(disposable);
-	context.subscriptions.push(view);
+    context.subscriptions.push(
+        window.registerTreeDataProvider('flowerplate.templates.provider', provider),
+        commands.registerCommand('flowerplate.templates.insert', insertTemplate),
+        window.onDidChangeActiveTextEditor(() => provider.refresh())
+    );
 }
 
-// This method is called when your extension is deactivated
-export function deactivate() {}
+async function insertTemplate(template: Template) {
+    const editor = window.activeTextEditor;
+
+    // eslint-disable-next-line curly
+    if (!editor) return;
+
+    const code = template.code.join("\n");
+    await editor.edit(editBuilder => {
+        editBuilder.insert(editor.selection.active, code);
+    });
+
+}
+
+export function deactivate() { }

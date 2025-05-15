@@ -1,0 +1,26 @@
+{
+    "name": "Join multiple strings to a single one",
+    "code": [
+        "",
+        "# Original list of strings",
+        "string_list = ['Hello', 'World', 'in', 'Python']",
+        "",
+        "# Squash the list into one string using join()",
+        "result_string = ''.join(string_list)",
+        "# Using space as the delimiter",
+        "",
+        "# Display the result",
+        "print(\"Original List of Strings:\", string_list)",
+        "#Output: Original List of Strings: ['Hello', 'World', 'in', 'Python']",
+        "",
+        "print(\"Squashed String:\", result_string)",
+        "#Output: Squashed String: Hello World in Python",
+        ""
+    ],
+    "language": "python",
+    "tags": [
+        "strings",
+        "join"
+    ],
+    "variables": {}
+}

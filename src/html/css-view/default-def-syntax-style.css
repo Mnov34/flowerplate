@@ -1,0 +1,19 @@
+.code-card {
+    background: #2d2d2d;
+    border-left: 6px solid #ffb81e;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    max-width: 400px;
+    transition: transform 0.2s ease;
+  }
+
+  .code-card:hover {
+    transform: scale(1.02);
+  }
+
+  .code-line {
+    color: #dcdcaa;
+    font-size: 1rem;
+    white-space: pre;
+  }

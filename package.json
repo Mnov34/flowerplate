@@ -2,43 +2,36 @@
   "name": "flowerplate",
   "displayName": "Flowerplate",
   "description": "Generate boilerplate code from visual boxes",
-  "version": "0.0.1",
+  "version": "0.1.1",
+  "icon": "./assets/images/flowerplate.png",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.99.0"
   },
   "categories": [
     "Other"
   ],
-  "viewsContainers":{
-    "activitybar":[
-      {
-        "id":"flowerplate",
-        "title":"FlowerPlate",
-        "icon":"./assets/flowerplate.jpg"
-      }
-    ]
-  },
-  "views":{
-    "webview":[
-      {
-        "type": "left-panel-webviews",
-        "id": "left-panel-webview",
-        "name": "Webview",
-        "icon":"./assets/flowerplate.jpg"
-      }
-    ]
-  },
-  
-  
   "activationEvents": [],
-  "main": "./dist/extension.js",
+  "main": "./dist/extension.js",  
   "contributes": {
-    "commands": [
-      {
-        "command": "flowerplate.helloWorld",
-        "title": "Hello World"
-      }
-    ]
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "flowerplateContainer",
+          "title": "Flowerplate",
+          "icon": "./assets/images/flowerplate.png"
+        }
+      ]
+    },
+    "views": {
+      "flowerplateContainer": [
+        {
+          "id": "flowerplate.templates.provider",
+          "name": "Template",
+          "icon": "./assets/images/flowerplate.png"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
@@ -55,16 +48,17 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.99.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
+    "@types/vscode": "^1.99.0",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
-    "eslint": "^9.23.0",
-    "esbuild": "^0.25.1",
-    "npm-run-all": "^4.1.5",
-    "typescript": "^5.8.2",
     "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.4.1"
+    "@vscode/test-electron": "^2.4.1",
+    "esbuild": "^0.25.1",
+    "eslint": "^9.23.0",
+    "npm-run-all": "^4.1.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
   }
 }

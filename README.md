@@ -1,71 +1,65 @@
-# flowerplate README
+# Flowerplate
 
-This is the README for your extension "flowerplate". After writing up a brief description, we recommend including the following sections.
+Bloom by adding Python boilerplate templates directly in VS Code.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- **Activity bar view** “Flowerplate” for quick access
+- **Tree view** of templates showing name, tags and a tooltip preview
+- **Insert templates** at the cursor with one click
+- **Context-aware messages**:
+  - No file opened
+  - Only supports Python for now
+  - No templates available
+  - Template load failures
+- **Future roadmap**: 
+    - HTML display of templates
+    - drag & drop
+    - search/browse UI
+    - smart suggestions  
 
-For example if there is an image subfolder under your extension project workspace:
+![Templates tree view](assets/images/TreeViewScreenshot.png)
 
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+> Tip: consider embedding a short animated GIF here to demonstrate insertion!
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+If you plan to develop or debug the extension, you’ll need:
+
+- **Visual Studio Code** ≥ 1.99.0  
+- **Node.js** and **npm** (for building & packaging)  
+- Running only on **Python** files at the moment
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+This extension does not yet expose any user-configurable settings.
+However, eventually, you will be able to:
+- set the variables on the templates yourself
+- create your own templates
+- disable or enable imports
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- 📋 Drag-and-drop support is not available in this version  
+- 🐛 JSON parsing errors for malformed template files are logged to the console but not surfaced in the UI  
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.1.0
 
-### 1.0.0
+- Initial release  
+- Tooltip previews showing first 20 lines of the template
+- Tree view scaffold and click to insert-template  
+- Status messages for context  
 
-Initial release of ...
+### 0.2.0
 
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
+- Ability to edit already existing template for yourself
 
 ## Following extension guidelines
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+Make sure you’ve reviewed and complied with the VS Code extension best practices:
 
 * [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
 
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+**Enjoy!**  

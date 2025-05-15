@@ -1,0 +1,21 @@
+{
+    "name": "Difference between two sets",
+    "code": [
+        "",
+        "set1 = {1, 2, 3, 4, 5}",
+        "set2 = {3, 4, 5, 6, 7}",
+        "",
+        "# Find the elements that are in set1 but not in set2",
+        "difference_set = set1.difference(set2)",
+        "",
+        "print(\"Elements in set1 but not in set2:\", difference_set)",
+        "# Output: Elements in set1 but not in set2: {1, 2}",
+        ""
+    ],
+    "language": "python",
+    "tags": [
+        "comparisons",
+        "validation"
+    ],
+    "variables": {}
+}

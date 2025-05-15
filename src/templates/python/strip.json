@@ -1,0 +1,24 @@
+{
+    "name": "Strip",
+    "code": [
+        "",
+        "# Original string with leading and trailing spaces",
+        "original_string = \"   Hello, World!   \"",
+        "",
+        "# Using strip to remove leading and trailing spaces",
+        "stripped_string = original_string.strip()",
+        "",
+        "# Displaying the results",
+        "print(\"Original String:\", repr(original_string))",
+        "# Output: Original String: '   Hello, World!   '",
+        "",
+        "print(\"Stripped String:\", repr(stripped_string))",
+        "# Output: Stripped String: 'Hello, World!'",
+        ""
+    ],
+    "language": "python",
+    "tags": [
+        "string"
+    ],
+    "variables": {}
+}

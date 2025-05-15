@@ -1,0 +1,27 @@
+{
+    "name": "Comparisons chain",
+    "code": [
+        "",
+        "def check_temperature(temperature):",
+        "   if 0 <= temperature <= 20:",
+        "       return \"It's cold outside.\"",
+        "   elif 21 <= temperature <= 30:",
+        "       return \"The weather is moderate.\"",
+        "   else:",
+        "       return \"It's warm outside.\"",
+        "",
+        "# Example usage",
+        "current_temperature = 25",
+        "",
+        "result = check_temperature(current_temperature)",
+        "print(result)",
+        "",
+        "# Output: The weather is moderate.",
+        ""
+    ],
+    "language": "python",
+    "tags": [
+        "comparisons"
+    ],
+    "variables": {}
+}
