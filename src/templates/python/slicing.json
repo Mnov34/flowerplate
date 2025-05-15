@@ -1,7 +1,9 @@
 {
     "name": "String slicing",
+    "imports": [
+        ""
+    ],
     "code": [
-        "",
         "my_string = \"Hello, World!\"",
         "",
         "# Get characters from index 7 to 12 (exclusive)",
@@ -17,14 +19,14 @@
         "# Slice from the beginning up to index 5 (exclusive)",
         "substring = my_string[:5]",
         "print(substring)",
-        "# Output: Hello",
-        ""
+        "# Output: Hello"
     ],
     "language": "python",
     "tags": [
         "slice",
         "string",
-        "words"
+        "words",
+        "tutorial"
     ],
     "variables": {}
 }

@@ -1,5 +1,6 @@
 {
   "name": "flowerplate",
+  "publisher": "DevGarden",
   "displayName": "Flowerplate",
   "description": "Generate boilerplate code from visual boxes",
   "version": "0.1.1",
@@ -12,8 +13,69 @@
     "Other"
   ],
   "activationEvents": [],
-  "main": "./dist/extension.js",  
+  "main": "./dist/extension.js",
   "contributes": {
+    "configuration": [
+      {
+        "title": "Flowerplate",
+        "properties": {
+          "flowerplate.templates.tooltip.previewLines": {
+            "type": "number",
+            "default": 5,
+            "description": "How many lines of code to show in the card tooltip."
+          },
+          "flowerplate.templates.customPaths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": [],
+            "description": "Additional absolute paths where user-defined templates live."
+          },
+          "flowerplate.insert.autoformat": {
+            "type": "boolean",
+            "default": false,
+            "description": "Run editor's format command after inserting a snippet."
+          },
+          "flowerplate.insert.preserveSelection": {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, reselect the inserted snippet for easy overwrite."
+          },
+          "flowerplate.insert.setVariables": {
+            "type": "boolean",
+            "default": true,
+            "description": "Prompt the user to fill in any TemplateVariables before insertion."
+          },
+          "flowerplate.insert.imports": {
+            "type": "boolean",
+            "default": true,
+            "description": "Should the inserted template also insert it's required imports."
+          },
+          "flowerplate.dragAndDrop.enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enable dragging cards into the editor."
+          },
+          "flowerplate.search.enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide the search bar at the top of the view."
+          },
+          "flowerplate.search.placeHolder": {
+            "type": "string",
+            "default": "Filter templates...",
+            "description": "Placeholder text in the search input."
+          }
+        }
+      }
+    ],
+    "commands": [
+      {
+        "command": "flowerplate.settings.open",
+        "title": "Settings"
+      }
+    ],
     "viewsContainers": {
       "activitybar": [
         {
@@ -29,6 +91,15 @@
           "id": "flowerplate.templates.provider",
           "name": "Template",
           "icon": "./assets/images/flowerplate.png"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "when": "view == flowerplate.templates.provider",
+          "command": "flowerplate.settings.open",
+          "group": "navigation"
         }
       ]
     }

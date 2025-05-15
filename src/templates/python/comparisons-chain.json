@@ -1,7 +1,9 @@
 {
     "name": "Comparisons chain",
+    "imports": [
+        ""
+    ],
     "code": [
-        "",
         "def check_temperature(temperature):",
         "   if 0 <= temperature <= 20:",
         "       return \"It's cold outside.\"",
@@ -16,12 +18,12 @@
         "result = check_temperature(current_temperature)",
         "print(result)",
         "",
-        "# Output: The weather is moderate.",
-        ""
+        "# Output: The weather is moderate."
     ],
     "language": "python",
     "tags": [
-        "comparisons"
+        "comparisons",
+        "tutorial"
     ],
     "variables": {}
 }

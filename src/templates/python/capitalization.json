@@ -1,12 +1,12 @@
 {
     "name": "Capitalize string",
+    "imports": [
+        ""
+    ],
     "code": [
-        "",
         "input_string = \"hello world\"",
         "capitalized_string = input_string.title()",
-        "print(capitalized_string)",
-        "#Output: Hello World",
-        ""
+        "print(capitalized_string)"
     ],
     "language": "python",
     "tags": [

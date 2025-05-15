@@ -20,8 +20,6 @@ Bloom by adding Python boilerplate templates directly in VS Code.
 
 ![Templates tree view](assets/images/TreeViewScreenshot.png)
 
-> Tip: consider embedding a short animated GIF here to demonstrate insertion!
-
 ## Requirements
 
 If you plan to develop or debug the extension, you’ll need:

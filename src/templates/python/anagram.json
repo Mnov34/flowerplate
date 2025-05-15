@@ -1,8 +1,9 @@
 {
     "name": "Anagram checker",
+    "imports": [
+        "from collections import Counter"
+    ],
     "code": [
-        "",
-        "from collections import Counter",
         "def are_anagrams(word1, word2):",
         "   return Counter(word1) == Counter(word2)",
         "",
@@ -12,14 +13,14 @@
         "result = are_anagrams(word1, word2)",
         "",
         "print(f\"{word1} and {word2} are {'anagrams' if result else 'not anagrams'}\")",
-        "#Output: listen and silent are anagrams",
-        ""
+        "#Output: listen and silent are anagrams"
     ],
     "language": "python",
     "tags": [
         "words",
         "string",
-        "validation"
+        "validation",
+        "tutorial"
     ],
     "variables": {}
 }
