@@ -3,11 +3,22 @@ import { Template } from './types';
 import path = require('path');
 
 export class TemplateManager {
+    private static _instance: TemplateManager;
     private cache = new Map<string, Template[]>();
     private templateRoot: string;
 
-    constructor(context: ExtensionContext) {
+    private constructor(context: ExtensionContext) {
         this.templateRoot = path.join(context.extensionPath, 'src', 'templates');
+    }
+
+    public static getInstance(context?: ExtensionContext) {
+        if (!TemplateManager._instance) {
+            if (!context) {
+                throw new Error('TemplateManager must be initialized with ExtensionContext first');
+            }
+            TemplateManager._instance = new TemplateManager(context);
+        }
+        return TemplateManager._instance;
     }
 
     async getTemplates(language: string) {
@@ -53,6 +64,7 @@ export class TemplateManager {
 
         return {
             ...template,
+            sourcePath: filePath,
             imports: this.normalizeCode(template.imports || []),
             code: this.normalizeCode(template.code)
         };

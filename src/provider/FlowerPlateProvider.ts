@@ -4,14 +4,24 @@ import { Template } from '../util/types';
 import { UserConfiguration } from '../util/UserConfiguration';
 
 export class FlowerPlateProvider implements TreeDataProvider<TreeItem> {
-    private config = UserConfiguration.getInstance();
-    private templateManager: TemplateManager;
+    private static _instance: FlowerPlateProvider;
+    private config: UserConfiguration = UserConfiguration.getInstance();
+    private templateManager: TemplateManager = TemplateManager.getInstance();
     private _onDidChangeTreeData = new EventEmitter<TreeItem | undefined>();
     readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
 
-    constructor(context: ExtensionContext) {
-        this.templateManager = new TemplateManager(context);
+    private constructor(context: ExtensionContext) {
         this.config.onDidChange(() => this.refresh());
+    }
+
+    public static getInstance(context?: ExtensionContext) {
+        if (!FlowerPlateProvider._instance) {
+            if (!context) {
+                throw new Error('FlowerPlateProvider must be initialized with ExtensionContext first');
+            }
+            FlowerPlateProvider._instance = new FlowerPlateProvider(context);
+        }
+        return FlowerPlateProvider._instance;
     }
 
     refresh(): void {
